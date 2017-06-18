@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Verify Negotiator</string>
+    <string name="app_logo">verify logo</string>
+    <string name="hint_email">Type your email address</string>
+    <string name="hint_password">Type your password</string>
+    <string name="label_login">Please log-in to access the negotiator app</string>
+    <string name="btn_login">Sign In</string>
+    <string name="btn_logging_in">Logging In...</string>
+</resources>
