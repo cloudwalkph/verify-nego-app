@@ -30,4 +30,5 @@
         <item name="android:textColorHint">@color/colorTextHint</item>
     </style>
 
+    <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 </resources>
