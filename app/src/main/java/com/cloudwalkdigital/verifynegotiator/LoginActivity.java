@@ -61,6 +61,18 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     @OnClick(R.id.btn_login)
     public void doLogin(Button button) {
         button.setText(R.string.btn_logging_in);
@@ -101,14 +113,6 @@ public class LoginActivity extends AppCompatActivity {
         Gson gson = new Gson();
         editor.putString("auth", gson.toJson(auth));
         editor.apply();
-    }
-
-    private Auth getUserAuth() {
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString("auth", "");
-        Auth auth = gson.fromJson(json, Auth.class);
-
-        return auth;
     }
 
     /**
