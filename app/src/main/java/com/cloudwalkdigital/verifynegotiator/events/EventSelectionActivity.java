@@ -1,6 +1,7 @@
 package com.cloudwalkdigital.verifynegotiator.events;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -8,14 +9,23 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
+import com.cloudwalkdigital.verifynegotiator.App;
 import com.cloudwalkdigital.verifynegotiator.LoginActivity;
 import com.cloudwalkdigital.verifynegotiator.R;
+import com.cloudwalkdigital.verifynegotiator.data.models.Auth;
+import com.google.gson.Gson;
+
+import javax.inject.Inject;
 
 public class EventSelectionActivity extends AppCompatActivity {
+    @Inject SharedPreferences sharedPreferences;
 
     private DrawerLayout mDrawerLayout;
+
+    private final String TAG = "EVENTSELECTIONACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +35,11 @@ public class EventSelectionActivity extends AppCompatActivity {
         setupToolbar();
         setupDrawer();
 
+        // Bind
+        ((App) getApplication()).getNetComponent().inject(this);
+
+        String json = sharedPreferences.getString("user", "");
+        Log.i(TAG, json);
     }
 
     private void setupToolbar() {
@@ -54,6 +69,14 @@ public class EventSelectionActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private Auth getUserAuth() {
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("auth", "");
+        Auth auth = gson.fromJson(json, Auth.class);
+
+        return auth;
     }
 
     private void setupDrawerContent(NavigationView navigationView) {

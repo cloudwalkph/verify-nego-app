@@ -3,6 +3,7 @@ package com.cloudwalkdigital.verifynegotiator.dagger;
 import com.cloudwalkdigital.verifynegotiator.LoginActivity;
 import com.cloudwalkdigital.verifynegotiator.dagger.modules.AppModule;
 import com.cloudwalkdigital.verifynegotiator.dagger.modules.NetModule;
+import com.cloudwalkdigital.verifynegotiator.events.EventSelectionActivity;
 
 import javax.inject.Singleton;
 
@@ -16,4 +17,5 @@ import dagger.Component;
 @Component(modules = {AppModule.class, NetModule.class})
 public interface NetComponent {
     void inject(LoginActivity activity);
+    void inject(EventSelectionActivity activity);
 }

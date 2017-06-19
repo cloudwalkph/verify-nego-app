@@ -12,4 +12,5 @@
     <string name="menu_events">Events</string>
     <string name="menu_logout">Logout</string>
     <string name="navigation_view_header_title">VERIFY - Negotiator</string>
+    <string name="failed_login">Invalid username/password. Please try again.</string>
 </resources>
