@@ -3,6 +3,13 @@
     <string name="app_logo">verify logo</string>
     <string name="hint_email">Type your email address</string>
     <string name="hint_password">Type your password</string>
+    <string name="hint_name">Type your name</string>
+    <string name="hint_contact">Type your contact number</string>
+    <string name="hint_school">Type your school name</string>
+    <string name="hint_designation">Type your designation</string>
+    <string name="hint_address">Type your address</string>
+    <string name="hint_location">Type your location</string>
+    <string name="hint_other_details">Type your other details</string>
     <string name="label_login">Please log-in to access the negotiator app</string>
     <string name="btn_login">Sign In</string>
     <string name="btn_logging_in">Logging In...</string>
@@ -11,6 +18,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu_events">Events</string>
     <string name="menu_logout">Logout</string>
+    <string name="btn_submit">Submit</string>
     <string name="navigation_view_header_title">VERIFY - Negotiator</string>
     <string name="failed_login">Invalid username/password. Please try again.</string>
 </resources>

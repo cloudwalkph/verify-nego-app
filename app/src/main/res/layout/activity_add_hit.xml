@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.cloudwalkdigital.verifynegotiator.addhit.AddHitActivity">
+    android:background="@color/colorPrimary"
+    tools:context="com.cloudwalkdigital.verifynegotiator.addhit.AddHitActivity"
+    android:weightSum="1">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,5 +23,173 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
     </android.support.design.widget.AppBarLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="wrap_content"
+                android:layout_height="88dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
+                android:contentDescription="@string/app_logo"
+                android:scaleType="fitCenter"
+                android:src="@drawable/camera"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/inputName"
+                style="@style/AppTheme.Widget.editTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginStart="9dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="0.01"
+                android:ems="10"
+                android:hint="@string/hint_name"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image" />
+
+            <EditText
+                android:id="@+id/inputEmail"
+                style="@style/AppTheme.Widget.editTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginStart="9dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="@string/hint_email"
+                android:inputType="textEmailAddress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputName" />
+
+            <EditText
+                android:id="@+id/inputContactNo"
+                style="@style/AppTheme.Widget.editTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginStart="9dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="@string/hint_contact"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputEmail" />
+
+            <EditText
+                android:id="@+id/inputSchoolName"
+                style="@style/AppTheme.Widget.editTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginStart="9dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="@string/hint_school"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputContactNo" />
+
+            <EditText
+                android:id="@+id/inputDesignation"
+                style="@style/AppTheme.Widget.editTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginStart="9dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="@string/hint_designation"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputSchoolName" />
+
+            <EditText
+                android:id="@+id/inputAddress"
+                style="@style/AppTheme.Widget.editTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginStart="9dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="@string/hint_address"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputDesignation" />
+
+            <EditText
+                android:id="@+id/inputLocation"
+                style="@style/AppTheme.Widget.editTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginStart="9dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="@string/hint_location"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputAddress" />
+
+            <EditText
+                android:id="@+id/inputOtherDetails"
+                style="@style/AppTheme.Widget.editTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginStart="9dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="@string/hint_other_details"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputLocation" />
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/btn_submit"
+                android:textColor="@color/colorTextWhite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputOtherDetails" />
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
