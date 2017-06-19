@@ -30,5 +30,11 @@
         <item name="android:textColorHint">@color/colorTextHint</item>
     </style>
 
+    <style name="AppTheme.Widget.formTextStyle" parent="Widget.AppCompat.EditText">
+
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColorHint">@color/colorTextHint</item>
+    </style>
+
     <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 </resources>
