@@ -16,6 +16,7 @@ import android.widget.EditText;
 import com.cloudwalkdigital.verifynegotiator.data.models.Auth;
 import com.cloudwalkdigital.verifynegotiator.data.models.User;
 import com.cloudwalkdigital.verifynegotiator.events.EventSelectionActivity;
+import com.cloudwalkdigital.verifynegotiator.utils.SessionManager;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -38,6 +39,7 @@ import retrofit2.http.POST;
 public class LoginActivity extends AppCompatActivity {
     @Inject SharedPreferences sharedPreferences;
     @Inject Retrofit retrofit;
+    @Inject SessionManager sessionManager;
 
     @BindView(R.id.btn_login) Button mBtnLogin;
     @BindView(R.id.inputEmail) EditText mEmail;
@@ -55,6 +57,10 @@ public class LoginActivity extends AppCompatActivity {
         ((App) getApplication()).getNetComponent().inject(this);
         ButterKnife.bind(this);
 
+        if (sessionManager.isLoggedIn()) {
+            Intent intent = new Intent(this, EventSelectionActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override

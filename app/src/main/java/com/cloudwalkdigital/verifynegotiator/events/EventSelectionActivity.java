@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cloudwalkdigital.verifynegotiator.App;
 import com.cloudwalkdigital.verifynegotiator.LoginActivity;
@@ -212,7 +213,7 @@ public class EventSelectionActivity extends AppCompatActivity {
 
         // Provide a direct reference to each of the views within a data item
         // Used to cache the views within the item layout for fast access
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             // Your holder should contain a member variable
             // for any view that will be set as you render a row
             public TextView nameTextView;
@@ -227,6 +228,19 @@ public class EventSelectionActivity extends AppCompatActivity {
 
                 nameTextView = (TextView) itemView.findViewById(R.id.event_name);
                 statusTextView = (TextView) itemView.findViewById(R.id.event_status);
+
+                itemView.setOnClickListener(this);
+            }
+
+            @Override
+            public void onClick(View v) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    Event event = events.get(position);
+
+                    // We can access the data within the views
+                    Toast.makeText(getContext(), event.getName(), Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
