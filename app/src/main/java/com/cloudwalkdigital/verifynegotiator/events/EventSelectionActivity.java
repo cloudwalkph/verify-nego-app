@@ -23,7 +23,7 @@ public class EventSelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_selection);
 
         setupToolbar();
-
+        setupDrawer();
 
     }
 
