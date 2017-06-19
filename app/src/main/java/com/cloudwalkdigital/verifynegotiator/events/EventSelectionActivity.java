@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.cloudwalkdigital.verifynegotiator.App;
 import com.cloudwalkdigital.verifynegotiator.LoginActivity;
 import com.cloudwalkdigital.verifynegotiator.R;
+import com.cloudwalkdigital.verifynegotiator.addhit.AddHitActivity;
 import com.cloudwalkdigital.verifynegotiator.data.models.Auth;
 import com.cloudwalkdigital.verifynegotiator.data.models.Event;
 import com.cloudwalkdigital.verifynegotiator.data.remote.EventsService;
@@ -79,6 +80,7 @@ public class EventSelectionActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ActionBar ab = getSupportActionBar();
+        ab.setTitle("Assigned Events");
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
     }
@@ -240,6 +242,8 @@ public class EventSelectionActivity extends AppCompatActivity {
 
                     // We can access the data within the views
                     Toast.makeText(getContext(), event.getName(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(EventSelectionActivity.this, AddHitActivity.class);
+                    startActivity(intent);
                 }
             }
         }
