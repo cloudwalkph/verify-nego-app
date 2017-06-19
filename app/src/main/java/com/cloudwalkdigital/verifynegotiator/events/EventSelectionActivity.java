@@ -16,12 +16,14 @@ import com.cloudwalkdigital.verifynegotiator.App;
 import com.cloudwalkdigital.verifynegotiator.LoginActivity;
 import com.cloudwalkdigital.verifynegotiator.R;
 import com.cloudwalkdigital.verifynegotiator.data.models.Auth;
+import com.cloudwalkdigital.verifynegotiator.utils.SessionManager;
 import com.google.gson.Gson;
 
 import javax.inject.Inject;
 
 public class EventSelectionActivity extends AppCompatActivity {
     @Inject SharedPreferences sharedPreferences;
+    @Inject SessionManager sessionManager;
 
     private DrawerLayout mDrawerLayout;
 
@@ -32,14 +34,15 @@ public class EventSelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_selection);
 
-        setupToolbar();
-        setupDrawer();
-
         // Bind
         ((App) getApplication()).getNetComponent().inject(this);
 
-        String json = sharedPreferences.getString("user", "");
-        Log.i(TAG, json);
+        if (! sessionManager.isLoggedIn()) {
+            sessionManager.logout(this);
+        }
+
+        setupToolbar();
+        setupDrawer();
     }
 
     private void setupToolbar() {
@@ -89,8 +92,7 @@ public class EventSelectionActivity extends AppCompatActivity {
                                 // Do nothing, we're already on that screen
                                 break;
                             case R.id.menu_logout:
-                                Intent intent = new Intent(EventSelectionActivity.this, LoginActivity.class);
-                                startActivity(intent);
+                                sessionManager.logout(EventSelectionActivity.this);
                                 break;
                             default:
                                 break;

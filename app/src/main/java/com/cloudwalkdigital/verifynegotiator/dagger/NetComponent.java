@@ -19,5 +19,5 @@ import dagger.Component;
 public interface NetComponent {
     void inject(LoginActivity activity);
     void inject(EventSelectionActivity activity);
-    void inject(SessionManager sessionManager);
+//    void inject(SessionManager sessionManager);
 }

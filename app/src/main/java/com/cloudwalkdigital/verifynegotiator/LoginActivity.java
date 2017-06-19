@@ -46,10 +46,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private final String TAG = "LOGINACTIVITY";
 
-    private final String grantType = "password";
-    private final Integer clientId = 2;
-    private final String clientSecret = "3GsvS8QeY31WT4rovd78LKyXzj6RJ18aM0QJO4a4";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +119,10 @@ public class LoginActivity extends AppCompatActivity {
      */
     private Boolean attemptAuth(String username, String password) {
         AuthenticationService service = retrofit.create(AuthenticationService.class);
+        String clientSecret = "zWvEKjENWxqWSrWkKOS30DbhVCr9GxovgfM5GsvN";
+        String grantType = "password";
+        Integer clientId = 2;
+
         Call<Auth> call = service.authenticate(grantType, clientId,
                 clientSecret, username, password);
 
@@ -139,8 +139,6 @@ public class LoginActivity extends AppCompatActivity {
             return getUserInfo(auth);
         } catch (IOException e) {
             e.printStackTrace();
-            resetButton();
-            showFailedSnackbar();
         }
 
         return false;
@@ -199,8 +197,6 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         } catch (IOException e) {
             e.printStackTrace();
-            resetButton();
-            showFailedSnackbar();
         }
 
         return false;

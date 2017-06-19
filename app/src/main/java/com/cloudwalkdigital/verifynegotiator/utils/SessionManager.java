@@ -16,7 +16,12 @@ import javax.inject.Inject;
  */
 
 public class SessionManager {
-    @Inject SharedPreferences sharedPreferences;
+    protected SharedPreferences sharedPreferences;
+
+    @Inject
+    public SessionManager(SharedPreferences sharedPreferences) {
+        this.sharedPreferences = sharedPreferences;
+    }
 
     public User getUserInformation() {
         Gson gson = new Gson();
@@ -41,5 +46,11 @@ public class SessionManager {
 
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);
+    }
+
+    public Boolean isLoggedIn() {
+        User user = getUserInformation();
+
+        return user != null;
     }
 }
