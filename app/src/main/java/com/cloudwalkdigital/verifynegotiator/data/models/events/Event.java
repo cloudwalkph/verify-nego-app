@@ -1,10 +1,14 @@
-package com.cloudwalkdigital.verifynegotiator.data.models;
+package com.cloudwalkdigital.verifynegotiator.data.models.events;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by alleoindong on 6/19/17.
  */
 
-public class Event {
+public class Event extends RealmObject {
+    @PrimaryKey
     protected Integer id;
     protected String name;
     protected String status;

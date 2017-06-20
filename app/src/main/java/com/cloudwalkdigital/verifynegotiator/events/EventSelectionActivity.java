@@ -13,26 +13,21 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudwalkdigital.verifynegotiator.App;
-import com.cloudwalkdigital.verifynegotiator.LoginActivity;
 import com.cloudwalkdigital.verifynegotiator.R;
 import com.cloudwalkdigital.verifynegotiator.addhit.AddHitActivity;
 import com.cloudwalkdigital.verifynegotiator.data.models.Auth;
-import com.cloudwalkdigital.verifynegotiator.data.models.Event;
-import com.cloudwalkdigital.verifynegotiator.data.remote.EventsService;
+import com.cloudwalkdigital.verifynegotiator.data.models.events.Event;
+import com.cloudwalkdigital.verifynegotiator.data.models.events.remote.EventsService;
 import com.cloudwalkdigital.verifynegotiator.utils.SessionManager;
-import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;

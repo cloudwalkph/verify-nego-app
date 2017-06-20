@@ -1,6 +1,6 @@
-package com.cloudwalkdigital.verifynegotiator.data.remote;
+package com.cloudwalkdigital.verifynegotiator.data.models.events.remote;
 
-import com.cloudwalkdigital.verifynegotiator.data.models.Event;
+import com.cloudwalkdigital.verifynegotiator.data.models.events.Event;
 
 import java.util.List;
 
