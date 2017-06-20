@@ -181,6 +181,7 @@ public class AddHitActivity extends AppCompatActivity {
 
                 mSubmit.setEnabled(false);
                 mSubmit.setText(R.string.btn_submit);
+                clearFields();
             }
 
             @Override
@@ -192,6 +193,20 @@ public class AddHitActivity extends AppCompatActivity {
                 mSubmit.setText(R.string.btn_submit);
             }
         });
+    }
+
+    private void clearFields() {
+        mName.setText("");
+        mSchoolName.setText("");
+        mEmail.setText("");
+        mContactNo.setText("");
+        mDesignation.setText("");
+        mAddress.setText("");
+        mOtherDetails.setText("");
+        mLocation.setSelection(0);
+
+        mImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        mImage.setImageDrawable(getDrawable(R.drawable.camera));
     }
 
     private Boolean checkFields() {
