@@ -44,6 +44,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
@@ -138,10 +139,13 @@ public class AddHitActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btn_submit)
-    public void submit() {
+    public void submit(Button button) {
         if (! checkFields()) {
             return;
         }
+
+        button.setEnabled(false);
+        button.setText("Saving Record...");
 
         Hit hit = new Hit(mName.getText().toString(),
                 mSchoolName.getText().toString(),
@@ -166,18 +170,28 @@ public class AddHitActivity extends AppCompatActivity {
         APIService service = retrofit.create(APIService.class);
         Call<Hit> call = service.createHit("Bearer " + auth.getAccessToken(), projectId, hit);
 
-        try {
-            Response<Hit> response = call.execute();
-            Log.i(TAG, "onAPIResponse: " + response.raw().toString());
+        call.enqueue(new Callback<Hit>() {
+            @Override
+            public void onResponse(Call<Hit> call, Response<Hit> response) {
+                Log.i(TAG, "onAPIResponse: " + response.raw().toString());
 
-            if (response.isSuccessful()) {
-                showSuccessSnackbar("Successfully added a hit");
+                if (response.isSuccessful()) {
+                    showSuccessSnackbar("Successfully added a hit");
+                }
+
+                mSubmit.setEnabled(false);
+                mSubmit.setText(R.string.btn_submit);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.i(TAG, "onAPIResponseFailed: " +  e.getMessage());
-            showFailedSnackbar("Failed to add a hit, check your network connection");
-        }
+
+            @Override
+            public void onFailure(Call<Hit> call, Throwable t) {
+                Log.i(TAG, "onAPIResponseFailed: " + t.getMessage());
+                showFailedSnackbar("Failed to add a hit, check your network connection");
+
+                mSubmit.setEnabled(false);
+                mSubmit.setText(R.string.btn_submit);
+            }
+        });
     }
 
     private Boolean checkFields() {
