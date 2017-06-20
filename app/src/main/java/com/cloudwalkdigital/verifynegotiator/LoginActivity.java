@@ -26,6 +26,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import permissions.dispatcher.RuntimePermissions;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -125,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private Boolean attemptAuth(String username, String password) {
         AuthenticationService service = retrofit.create(AuthenticationService.class);
-        String clientSecret = "zWvEKjENWxqWSrWkKOS30DbhVCr9GxovgfM5GsvN";
+        String clientSecret = "HYH7NpNVdtB6MeaUCppmHBl6gA3ZfKpRS9NNAB6l";
         String grantType = "password";
         Integer clientId = 2;
 

@@ -21,4 +21,9 @@
     <string name="btn_submit">Submit</string>
     <string name="navigation_view_header_title">VERIFY - Negotiator</string>
     <string name="failed_login">Invalid username/password. Please try again.</string>
+    <string name="permission_location_rationale">This application needs to get the location or gps updates of the user</string>
+    <string name="button_allow">Allow</string>
+    <string name="button_deny">Deny</string>
+    <string name="permission_call_denied">You denied the location permission</string>
+    <string name="permission_call_neverask">You disabled the gps permission</string>
 </resources>

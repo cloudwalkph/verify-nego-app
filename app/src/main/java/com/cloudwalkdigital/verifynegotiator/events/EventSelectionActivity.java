@@ -1,8 +1,11 @@
 package com.cloudwalkdigital.verifynegotiator.events;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -26,6 +29,7 @@ import com.cloudwalkdigital.verifynegotiator.addhit.AddHitActivity;
 import com.cloudwalkdigital.verifynegotiator.data.models.Auth;
 import com.cloudwalkdigital.verifynegotiator.data.models.events.Event;
 import com.cloudwalkdigital.verifynegotiator.data.models.events.remote.EventsService;
+import com.cloudwalkdigital.verifynegotiator.services.LocationService;
 import com.cloudwalkdigital.verifynegotiator.utils.SessionManager;
 
 import java.util.List;
@@ -34,11 +38,18 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnNeverAskAgain;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.OnShowRationale;
+import permissions.dispatcher.PermissionRequest;
+import permissions.dispatcher.RuntimePermissions;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+@RuntimePermissions
 public class EventSelectionActivity extends AppCompatActivity {
     @Inject SharedPreferences sharedPreferences;
     @Inject SessionManager sessionManager;
@@ -63,6 +74,9 @@ public class EventSelectionActivity extends AppCompatActivity {
         if (! sessionManager.isLoggedIn()) {
             sessionManager.logout(this);
         }
+
+        // Start gps service
+        EventSelectionActivityPermissionsDispatcher.launchLocationServiceWithCheck(this);
 
         setupToolbar();
         setupDrawer();
@@ -156,6 +170,71 @@ public class EventSelectionActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+    }
+
+    @NeedsPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+    public void launchLocationService() {
+        Intent i = new Intent(this, LocationService.class);
+        startService(i);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        EventSelectionActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+    }
+
+    // Annotate a method which explains why the permission/s is/are needed.
+    // It passes in a `PermissionRequest` object which can continue or abort the current permission
+    @OnShowRationale(Manifest.permission.ACCESS_FINE_LOCATION)
+    void showRationaleForFineLocation(PermissionRequest request) {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.permission_location_rationale)
+                .setPositiveButton(R.string.button_allow, (dialog, button) -> request.proceed())
+                .setNegativeButton(R.string.button_deny, (dialog, button) -> request.cancel())
+                .show();
+    }
+
+    // Annotate a method which is invoked if the user doesn't grant the permissions
+    @OnPermissionDenied(Manifest.permission.ACCESS_FINE_LOCATION)
+    void showDeniedForFineLocation() {
+        Toast.makeText(this, R.string.permission_call_denied, Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    // Annotates a method which is invoked if the user
+    // chose to have the device "never ask again" about a permission
+    @OnNeverAskAgain(Manifest.permission.ACCESS_FINE_LOCATION)
+    void showNeverAskForFineLocation() {
+        Toast.makeText(this, R.string.permission_call_neverask, Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    // Annotate a method which explains why the permission/s is/are needed.
+    // It passes in a `PermissionRequest` object which can continue or abort the current permission
+    @OnShowRationale(Manifest.permission.ACCESS_COARSE_LOCATION)
+    void showRationaleForCoarseLocation(PermissionRequest request) {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.permission_location_rationale)
+                .setPositiveButton(R.string.button_allow, (dialog, button) -> request.proceed())
+                .setNegativeButton(R.string.button_deny, (dialog, button) -> request.cancel())
+                .show();
+    }
+
+    // Annotate a method which is invoked if the user doesn't grant the permissions
+    @OnPermissionDenied(Manifest.permission.ACCESS_COARSE_LOCATION)
+    void showDeniedForCoarseLocation() {
+        Toast.makeText(this, R.string.permission_call_denied, Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    // Annotates a method which is invoked if the user
+    // chose to have the device "never ask again" about a permission
+    @OnNeverAskAgain(Manifest.permission.ACCESS_COARSE_LOCATION)
+    void showNeverAskForCoarseLocation() {
+        Toast.makeText(this, R.string.permission_call_neverask, Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     /**
