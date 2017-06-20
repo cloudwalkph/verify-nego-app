@@ -18,6 +18,7 @@ import com.cloudwalkdigital.verifynegotiator.data.models.User;
 import com.cloudwalkdigital.verifynegotiator.events.EventSelectionActivity;
 import com.cloudwalkdigital.verifynegotiator.utils.SessionManager;
 import com.google.gson.Gson;
+import com.testfairy.TestFairy;
 
 import java.io.IOException;
 
@@ -51,6 +52,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        TestFairy.begin(this, "510674f0271ee46c915ca8920a0ef72a0bfc4406");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
