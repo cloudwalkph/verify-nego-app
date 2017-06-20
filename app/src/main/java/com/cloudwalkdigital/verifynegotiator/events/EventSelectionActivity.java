@@ -291,6 +291,7 @@ public class EventSelectionActivity extends AppCompatActivity {
                     // We can access the data within the views
                     Toast.makeText(getContext(), event.getName(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(EventSelectionActivity.this, AddHitActivity.class);
+                    intent.putExtra("projectId", event.getId());
                     startActivity(intent);
                 }
             }

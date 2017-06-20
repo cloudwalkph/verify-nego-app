@@ -1,9 +1,11 @@
 package com.cloudwalkdigital.verifynegotiator.dagger;
 
 import com.cloudwalkdigital.verifynegotiator.LoginActivity;
+import com.cloudwalkdigital.verifynegotiator.addhit.AddHitActivity;
 import com.cloudwalkdigital.verifynegotiator.dagger.modules.AppModule;
 import com.cloudwalkdigital.verifynegotiator.dagger.modules.NetModule;
 import com.cloudwalkdigital.verifynegotiator.events.EventSelectionActivity;
+import com.cloudwalkdigital.verifynegotiator.services.CreateHitService;
 import com.cloudwalkdigital.verifynegotiator.services.LocationService;
 import com.cloudwalkdigital.verifynegotiator.utils.SessionManager;
 
@@ -20,6 +22,8 @@ import dagger.Component;
 public interface NetComponent {
     void inject(LoginActivity activity);
     void inject(EventSelectionActivity activity);
+    void inject(AddHitActivity activity);
     void inject(LocationService service);
+    void inject(CreateHitService service);
 //    void inject(SessionManager sessionManager);
 }

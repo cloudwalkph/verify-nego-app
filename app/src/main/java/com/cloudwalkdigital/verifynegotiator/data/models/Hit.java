@@ -43,6 +43,19 @@ public class Hit extends RealmObject {
     public Hit() {
     }
 
+    public Hit(String name, String schoolName, String email, String contactNumber,
+               String designation, String address, String otherDetails, String location) {
+
+        this.name = name;
+        this.schoolName = schoolName;
+        this.email = email;
+        this.contactNumber = contactNumber;
+        this.designation = designation;
+        this.address = address;
+        this.otherDetails = otherDetails;
+        this.location = location;
+    }
+
     public Hit(Integer id, Integer projectId, String hitTimestamp,
                String name, String schoolName, String email, String contactNumber,
                String designation, String address, String otherDetails, String image,

@@ -1,32 +1,64 @@
 package com.cloudwalkdigital.verifynegotiator.addhit;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import com.cloudwalkdigital.verifynegotiator.App;
 import com.cloudwalkdigital.verifynegotiator.R;
+import com.cloudwalkdigital.verifynegotiator.data.APIService;
+import com.cloudwalkdigital.verifynegotiator.data.models.Auth;
+import com.cloudwalkdigital.verifynegotiator.data.models.Hit;
+import com.cloudwalkdigital.verifynegotiator.data.models.User;
 import com.cloudwalkdigital.verifynegotiator.events.EventSelectionActivity;
+import com.cloudwalkdigital.verifynegotiator.services.CreateHitService;
 import com.cloudwalkdigital.verifynegotiator.utils.SessionManager;
+import com.google.gson.Gson;
+
+import java.io.IOException;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class AddHitActivity extends AppCompatActivity {
+    @Inject Retrofit retrofit;
     @Inject SessionManager sessionManager;
+    @Inject SharedPreferences sharedPreferences;
+
     private DrawerLayout mDrawerLayout;
 
     private final String TAG = "ADDHITACTIVITY";
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private int projectId;
+
+    @BindView(R.id.parentView) LinearLayout parentView;
 
     @BindView(R.id.inputName) EditText mName;
     @BindView(R.id.inputEmail) EditText mEmail;
@@ -36,13 +68,23 @@ public class AddHitActivity extends AppCompatActivity {
     @BindView(R.id.inputAddress) EditText mAddress;
     @BindView(R.id.inputOtherDetails) EditText mOtherDetails;
     @BindView(R.id.spinnerLocation) Spinner mLocation;
+    @BindView(R.id.imageCapture) ImageView mImage;
+    @BindView(R.id.btn_submit) Button mSubmit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hit);
 
+        projectId = getIntent().getIntExtra("projectId", 0);
+
+        if (projectId == 0) {
+            finish();
+            return;
+        }
+
         // Bind
+        ((App) getApplication()).getNetComponent().inject(this);
         ButterKnife.bind(this);
 
         setupToolbar();
@@ -73,6 +115,134 @@ public class AddHitActivity extends AppCompatActivity {
                 finish();
                 return true;
         }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            mImage.setImageBitmap(imageBitmap);
+            mImage.setScaleType(ImageView.ScaleType.FIT_XY);
+        }
+    }
+
+    @OnClick(R.id.imageCapture)
+    public void captureImage() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @OnClick(R.id.btn_submit)
+    public void submit() {
+        if (! checkFields()) {
+            return;
+        }
+
+        Hit hit = new Hit(mName.getText().toString(),
+                mSchoolName.getText().toString(),
+                mEmail.getText().toString(),
+                mContactNo.getText().toString(),
+                mDesignation.getText().toString(),
+                mAddress.getText().toString(),
+                mOtherDetails.getText().toString(),
+                mLocation.getSelectedItem().toString());
+
+//        Intent i = new Intent(this, CreateHitService.class);
+//
+//        Gson gson = new Gson();
+//        String json = gson.toJson(hit, Hit.class);
+//
+//        i.putExtra("projectId", projectId);
+//        i.putExtra("hit", json);
+//
+//        startService(i);
+
+        Auth auth = sessionManager.getAuthInformation();
+        APIService service = retrofit.create(APIService.class);
+        Call<Hit> call = service.createHit("Bearer " + auth.getAccessToken(), projectId, hit);
+
+        try {
+            Response<Hit> response = call.execute();
+            Log.i(TAG, "onAPIResponse: " + response.raw().toString());
+
+            if (response.isSuccessful()) {
+                showSuccessSnackbar("Successfully added a hit");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.i(TAG, "onAPIResponseFailed: " +  e.getMessage());
+            showFailedSnackbar("Failed to add a hit, check your network connection");
+        }
+    }
+
+    private Boolean checkFields() {
+        if (isEmpty(mSchoolName)) {
+            showFailedSnackbar("School name is required");
+
+            return false;
+        }
+
+        if (isEmpty(mName)) {
+            showFailedSnackbar("Name is required");
+
+            return false;
+        }
+
+        if (isEmpty(mEmail)) {
+            showFailedSnackbar("Email is required");
+
+            return false;
+        }
+
+        if (isEmpty(mContactNo)) {
+            showFailedSnackbar("Contact Number is required");
+
+            return false;
+        }
+
+        if (isEmpty(mDesignation)) {
+            showFailedSnackbar("Designation is required");
+
+            return false;
+        }
+
+        if (isEmpty(mAddress)) {
+            showFailedSnackbar("Address is required");
+
+            return false;
+        }
+
+        return true;
+    }
+
+    private void showFailedSnackbar(String message) {
+        Snackbar snackbar = Snackbar.make(parentView, message, Snackbar.LENGTH_LONG);
+        View sbView = snackbar.getView();
+        sbView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorRed));
+
+        snackbar.show();
+    }
+
+    private void showSuccessSnackbar(String message) {
+        Snackbar snackbar = Snackbar.make(parentView, message, Snackbar.LENGTH_LONG);
+        View sbView = snackbar.getView();
+        sbView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
+
+        snackbar.show();
+    }
+
+    private Boolean isEmpty(EditText editText) {
+        String text = editText.getText().toString().trim();
+
+        if (TextUtils.isEmpty(text)) {
+            return true;
+        }
+
+        return false;
     }
 }

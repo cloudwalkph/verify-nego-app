@@ -6,6 +6,11 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:name=".App"
@@ -25,6 +30,7 @@
         <activity android:name=".events.EventSelectionActivity" />
         <activity android:name=".addhit.AddHitActivity"/>
         <service android:name=".services.LocationService" android:exported="false"/>
+        <service android:name=".services.CreateHitService" android:exported="false"/>
     </application>
 
 </manifest>
