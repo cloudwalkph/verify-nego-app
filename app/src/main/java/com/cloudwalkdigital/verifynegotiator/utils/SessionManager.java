@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import com.cloudwalkdigital.verifynegotiator.LoginActivity;
 import com.cloudwalkdigital.verifynegotiator.data.models.Auth;
 import com.cloudwalkdigital.verifynegotiator.data.models.User;
+import com.cloudwalkdigital.verifynegotiator.services.LocationService;
 import com.google.gson.Gson;
 
 import javax.inject.Inject;
@@ -44,6 +45,11 @@ public class SessionManager {
         editor.clear();
         editor.apply();
 
+        // Stop service on logout
+        Intent myService = new Intent(context, LocationService.class);
+        context.stopService(myService);
+
+        // Bring user back to login
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);
     }

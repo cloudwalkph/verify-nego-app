@@ -28,7 +28,7 @@ import com.cloudwalkdigital.verifynegotiator.R;
 import com.cloudwalkdigital.verifynegotiator.addhit.AddHitActivity;
 import com.cloudwalkdigital.verifynegotiator.data.models.Auth;
 import com.cloudwalkdigital.verifynegotiator.data.models.events.Event;
-import com.cloudwalkdigital.verifynegotiator.data.models.events.remote.EventsService;
+import com.cloudwalkdigital.verifynegotiator.data.APIService;
 import com.cloudwalkdigital.verifynegotiator.services.LocationService;
 import com.cloudwalkdigital.verifynegotiator.utils.SessionManager;
 
@@ -104,7 +104,7 @@ public class EventSelectionActivity extends AppCompatActivity {
     }
 
     private void getAssignedEvents() {
-        EventsService service = retrofit.create(EventsService.class);
+        APIService service = retrofit.create(APIService.class);
         Auth auth = sessionManager.getAuthInformation();
 
         Call<List<Event>> call = service.getAssignedEvents("Bearer " + auth.getAccessToken());
@@ -187,14 +187,14 @@ public class EventSelectionActivity extends AppCompatActivity {
 
     // Annotate a method which explains why the permission/s is/are needed.
     // It passes in a `PermissionRequest` object which can continue or abort the current permission
-    @OnShowRationale(Manifest.permission.ACCESS_FINE_LOCATION)
-    void showRationaleForFineLocation(PermissionRequest request) {
-        new AlertDialog.Builder(this)
-                .setMessage(R.string.permission_location_rationale)
-                .setPositiveButton(R.string.button_allow, (dialog, button) -> request.proceed())
-                .setNegativeButton(R.string.button_deny, (dialog, button) -> request.cancel())
-                .show();
-    }
+//    @OnShowRationale(Manifest.permission.ACCESS_FINE_LOCATION)
+//    void showRationaleForFineLocation(PermissionRequest request) {
+//        new AlertDialog.Builder(this)
+//                .setMessage(R.string.permission_location_rationale)
+//                .setPositiveButton(R.string.button_allow, (dialog, button) -> request.proceed())
+//                .setNegativeButton(R.string.button_deny, (dialog, button) -> request.cancel())
+//                .show();
+//    }
 
     // Annotate a method which is invoked if the user doesn't grant the permissions
     @OnPermissionDenied(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -207,32 +207,6 @@ public class EventSelectionActivity extends AppCompatActivity {
     // chose to have the device "never ask again" about a permission
     @OnNeverAskAgain(Manifest.permission.ACCESS_FINE_LOCATION)
     void showNeverAskForFineLocation() {
-        Toast.makeText(this, R.string.permission_call_neverask, Toast.LENGTH_SHORT).show();
-        finish();
-    }
-
-    // Annotate a method which explains why the permission/s is/are needed.
-    // It passes in a `PermissionRequest` object which can continue or abort the current permission
-    @OnShowRationale(Manifest.permission.ACCESS_COARSE_LOCATION)
-    void showRationaleForCoarseLocation(PermissionRequest request) {
-        new AlertDialog.Builder(this)
-                .setMessage(R.string.permission_location_rationale)
-                .setPositiveButton(R.string.button_allow, (dialog, button) -> request.proceed())
-                .setNegativeButton(R.string.button_deny, (dialog, button) -> request.cancel())
-                .show();
-    }
-
-    // Annotate a method which is invoked if the user doesn't grant the permissions
-    @OnPermissionDenied(Manifest.permission.ACCESS_COARSE_LOCATION)
-    void showDeniedForCoarseLocation() {
-        Toast.makeText(this, R.string.permission_call_denied, Toast.LENGTH_SHORT).show();
-        finish();
-    }
-
-    // Annotates a method which is invoked if the user
-    // chose to have the device "never ask again" about a permission
-    @OnNeverAskAgain(Manifest.permission.ACCESS_COARSE_LOCATION)
-    void showNeverAskForCoarseLocation() {
         Toast.makeText(this, R.string.permission_call_neverask, Toast.LENGTH_SHORT).show();
         finish();
     }

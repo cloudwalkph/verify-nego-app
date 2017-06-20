@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -13,11 +14,27 @@ import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.cloudwalkdigital.verifynegotiator.App;
+import com.cloudwalkdigital.verifynegotiator.data.APIService;
+import com.cloudwalkdigital.verifynegotiator.data.models.Auth;
+import com.cloudwalkdigital.verifynegotiator.data.models.UserLocation;
+import com.cloudwalkdigital.verifynegotiator.utils.SessionManager;
+
+import javax.inject.Inject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 /**
  * Created by alleoindong on 6/19/17.
  */
 
 public class LocationService extends Service {
+    @Inject Retrofit retrofit;
+    @Inject SharedPreferences sharedPreferences;
+    @Inject SessionManager sessionManager;
 
     private static final String TAG = "NEGOTIATORGPS";
     private LocationManager mLocationManager = null;
@@ -36,6 +53,8 @@ public class LocationService extends Service {
         public void onLocationChanged(Location location) {
             Log.e(TAG, "onLocationChanged: " + location);
             mLastLocation.set(location);
+
+            sendLocationUpdate();
         }
 
         @Override
@@ -51,6 +70,27 @@ public class LocationService extends Service {
         @Override
         public void onProviderDisabled(String provider) {
             Log.e(TAG, "onStatusChanged: " + provider);
+        }
+
+        private void sendLocationUpdate() {
+            // get the auth
+            Auth auth = sessionManager.getAuthInformation();
+            UserLocation userLocation = new UserLocation(mLastLocation.getLatitude(),
+                    mLastLocation.getLongitude());
+
+            APIService service = retrofit.create(APIService.class);
+            Call<UserLocation> call = service.updateLocation("Bearer " + auth.getAccessToken(), userLocation);
+            call.enqueue(new Callback<UserLocation>() {
+                @Override
+                public void onResponse(Call<UserLocation> call, Response<UserLocation> response) {
+                    Log.i(TAG, "onAPIResponse: " + response.raw().toString());
+                }
+
+                @Override
+                public void onFailure(Call<UserLocation> call, Throwable t) {
+                    Log.i(TAG, "onAPIResponseFailed: " + t.getMessage());
+                }
+            });
         }
     }
 
@@ -69,6 +109,8 @@ public class LocationService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e(TAG, "onStartCommand");
         super.onStartCommand(intent, flags, startId);
+
+        ((App) getApplication()).getNetComponent().inject(this);
 
         return START_STICKY;
     }
