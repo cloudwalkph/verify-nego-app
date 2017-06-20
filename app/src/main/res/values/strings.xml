@@ -26,4 +26,5 @@
     <string name="button_deny">Deny</string>
     <string name="permission_call_denied">You denied the location permission</string>
     <string name="permission_call_neverask">You disabled the gps permission</string>
+    <string name="locations_prompt">Select a location</string>
 </resources>

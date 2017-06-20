@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="location_arrays">
+        <item>GMA</item>
+        <item>NORTH LUZON</item>
+        <item>SOUTH LUZON</item>
+        <item>VISAYAS</item>
+        <item>MINDANAO</item>
+    </string-array>
+</resources>

@@ -144,21 +144,29 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inputDesignation" />
 
-            <EditText
-                android:id="@+id/inputLocation"
-                style="@style/AppTheme.Widget.editTextStyle"
+            <!--<EditText-->
+                <!--android:id="@+id/inputLocation"-->
+                <!--style="@style/AppTheme.Widget.editTextStyle"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="45dp"-->
+                <!--android:layout_marginEnd="9dp"-->
+                <!--android:layout_marginStart="9dp"-->
+                <!--android:layout_marginTop="8dp"-->
+                <!--android:ems="10"-->
+                <!--android:hint="@string/hint_location"-->
+                <!--android:inputType="textPersonName"-->
+                <!--app:layout_constraintEnd_toEndOf="parent"-->
+                <!--app:layout_constraintHorizontal_bias="0.0"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/inputAddress" />-->
+
+            <Spinner
+                android:id="@+id/spinnerLocation"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginStart="9dp"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:hint="@string/hint_location"
-                android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inputAddress" />
+                android:entries="@array/location_arrays"
+                android:prompt="@string/locations_prompt"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_height="wrap_content" />
 
             <EditText
                 android:id="@+id/inputOtherDetails"
