@@ -6,6 +6,7 @@ import com.cloudwalkdigital.verifynegotiator.dagger.modules.AppModule;
 import com.cloudwalkdigital.verifynegotiator.dagger.modules.NetModule;
 import com.cloudwalkdigital.verifynegotiator.events.EventSelectionActivity;
 import com.cloudwalkdigital.verifynegotiator.services.CreateHitService;
+import com.cloudwalkdigital.verifynegotiator.services.FileUploadService;
 import com.cloudwalkdigital.verifynegotiator.services.LocationService;
 import com.cloudwalkdigital.verifynegotiator.utils.SessionManager;
 
@@ -25,5 +26,6 @@ public interface NetComponent {
     void inject(AddHitActivity activity);
     void inject(LocationService service);
     void inject(CreateHitService service);
+    void inject(FileUploadService service);
 //    void inject(SessionManager sessionManager);
 }

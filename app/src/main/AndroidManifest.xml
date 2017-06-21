@@ -31,14 +31,28 @@
         <activity android:name=".events.EventSelectionActivity" />
         <activity android:name=".addhit.AddHitActivity" />
 
+        <activity android:name=".hits.HitsActivity"/>
+
+
         <service
             android:name=".services.LocationService"
             android:exported="false" />
         <service
             android:name=".services.CreateHitService"
             android:exported="false" />
+        <service
+            android:name=".services.FileUploadService"
+            android:exported="false" />
 
-        <activity android:name=".hits.HitsActivity"></activity>
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.cloudwalkdigital.verifynegotiator"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
     </application>
 
 </manifest>
